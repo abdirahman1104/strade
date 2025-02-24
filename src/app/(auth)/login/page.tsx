@@ -6,8 +6,9 @@ import { signIn, signOut } from 'next-auth/react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { ArrowRight, Mail } from 'lucide-react'
+import { Suspense } from 'react'
 
-export default function LoginPage() {
+function LoginContent() {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
   const error = searchParams.get('error')
@@ -108,5 +109,13 @@ export default function LoginPage() {
         </Link>
       </motion.p>
     </>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   )
 }
